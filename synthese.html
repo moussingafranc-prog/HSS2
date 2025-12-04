@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse - Illusion de Hauteur des Lettres et des Mots</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-elevated: #232342;
+            --accent-gold: #d4a373;
+            --accent-blue: #6b8cce;
+            --accent-teal: #5eaaa8;
+            --text-primary: #e8e6e3;
+            --text-secondary: #a8a5a0;
+            --text-muted: #6b6966;
+            --border-subtle: rgba(212, 163, 115, 0.15);
+            --glow-gold: rgba(212, 163, 115, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Decorative background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(107, 140, 206, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(212, 163, 115, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 30px 100px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-top: 40px;
+        }
+
+        .category {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .header-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-blue));
+            margin: 40px auto 30px;
+        }
+
+        .author-info {
+            margin-top: 10px;
+        }
+
+        .author-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .author-email a {
+            font-size: 0.95rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .author-email a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 35px 40px;
+            margin-bottom: 60px;
+        }
+
+        .toc h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .toc-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            padding: 8px 0;
+        }
+
+        .toc-list a:hover {
+            color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        .toc-number {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            color: var(--accent-blue);
+            min-width: 30px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 70px;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2 .section-num {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin: 35px 0 20px;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin: 25px 0 15px;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+        }
+
+        ol {
+            counter-reset: item;
+        }
+
+        ol li {
+            counter-increment: item;
+        }
+
+        ol li::before {
+            content: counter(item) ".";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        /* Nested lists */
+        ul ul, ol ul {
+            margin: 10px 0;
+        }
+
+        ul ul li::before {
+            background: var(--accent-blue);
+            width: 4px;
+            height: 4px;
+            top: 11px;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent-gold);
+            padding: 25px 30px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Key finding box */
+        .key-finding {
+            background: linear-gradient(135deg, rgba(212, 163, 115, 0.1), rgba(107, 140, 206, 0.05));
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .key-finding h4 {
+            color: var(--accent-gold);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .key-finding h4::before {
+            content: '★';
+            font-size: 0.9rem;
+        }
+
+        /* Example box */
+        .example {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .example strong {
+            color: var(--accent-blue);
+            font-style: normal;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 30px;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        .scroll-top svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent-gold);
+        }
+
+        /* Download box */
+        .download-box {
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .download-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(212, 163, 115, 0.15), rgba(107, 140, 206, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-icon svg {
+            stroke: var(--accent-gold);
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-info h4 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+        }
+
+        .download-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-gold), #b8944d);
+            color: var(--bg-deep);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 163, 115, 0.3);
+        }
+
+        .download-btn svg {
+            stroke: var(--bg-deep);
+        }
+
+        code {
+            background: var(--bg-elevated);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--accent-blue);
+        }
+
+        /* References section */
+        .references-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .references-section h2 .section-num {
+            font-size: 1rem;
+        }
+
+        .reference-item {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-blue);
+            padding: 20px 25px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .reference-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .reference-text em {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px 80px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .toc {
+                padding: 25px;
+            }
+
+            .download-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .download-info h4 {
+                margin-top: 10px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: #333;
+            }
+
+            body::before {
+                display: none;
+            }
+
+            .scroll-top {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="category">HSS_51H05_EP — Approches expérimentales de la cognition</div>
+            <h1>L'Illusion de Hauteur des Lettres et des Mots</h1>
+            <p class="subtitle">Synthèse sur les mécanismes perceptifs de la lecture et le modèle d'activation interactive</p>
+            <div class="header-divider"></div>
+            <div class="author-info">
+                <p class="author-name">MOUSSINGA NDOUMBE François</p>
+                <p class="author-email"><a href="mailto:francois.moussiga@polytechnique.edu">francois.moussiga@polytechnique.edu</a></p>
+            </div>
+        </header>
+
+        <nav class="toc">
+            <h2>Table des Matières</h2>
+            <ol class="toc-list">
+                <li><a href="#introduction"><span class="toc-number">I.</span> Introduction</a></li>
+                <li><a href="#cadre"><span class="toc-number">II.</span> Cadre théorique et prédictions</a></li>
+                <li><a href="#methodes"><span class="toc-number">III.</span> Méthodes expérimentales</a></li>
+                <li><a href="#resultats"><span class="toc-number">IV.</span> Résultats</a></li>
+                <li><a href="#discussion"><span class="toc-number">V.</span> Discussion</a></li>
+                <li><a href="#conclusion"><span class="toc-number">VI.</span> Conclusion</a></li>
+                <li><a href="#experience"><span class="toc-number">VII.</span> Recréation de l'expérience 1</a></li>
+            </ol>
+        </nav>
+
+        <main>
+            <section id="introduction">
+                <h2><span class="section-num">I.</span> Introduction</h2>
+                
+                <p>L'apprentissage de la lecture est un processus qui s'accompagne de profondes modifications des réseaux neuronaux impliqués dans la vision et le langage. Ces réorganisations fonctionnelles donnent lieu à des phénomènes bien documentés, tels que <strong>l'effet de supériorité du mot</strong>. Décrit dès Reicher (1968), cet effet désigne le fait qu'une lettre est mieux reconnue lorsqu'elle est présentée au sein d'un mot que lorsqu'elle est présentée isolément ou au sein d'une chaîne de non-mots.</p>
+
+                <div class="key-finding">
+                    <h4>Phénomène central</h4>
+                    <p>Les lettres et les mots sont perçus comme étant plus grands (plus "hauts") que des pseudo-lettres ou des mots dont les syllabes ont été inversées, alors même que leur taille physique est identique.</p>
+                </div>
+
+                <p>Autrement dit, le traitement spécifique des lettres et des mots ne se limite pas à faciliter la reconnaissance ; il peut également avoir des conséquences sur la perception de bas niveau, en modifiant la représentation de propriétés physiques élémentaires comme la taille apparente.</p>
+
+                <p>Cet effet s'inscrit dans la continuité d'un ensemble plus large de résultats sur la reconnaissance de lettres et de fragments de lettres. L'effet de supériorité des lettres (Schendel et Shaw, 1976 ; Reingold et Jolicœur, 1993) montre que des fragments de lettres sont plus facilement identifiés lorsqu'ils sont présentés à l'intérieur d'une lettre que lorsqu'ils sont présentés isolés.</p>
+
+                <div class="highlight-box">
+                    <p><strong>Deux grandes familles de modèles</strong> ont été proposées pour rendre compte de ces phénomènes : les modèles à modulation descendante (top-down) et l'hypothèse de fluence perceptive.</p>
+                </div>
+            </section>
+
+            <section id="cadre">
+                <h2><span class="section-num">II.</span> Cadre théorique et prédictions</h2>
+
+                <h3>Le modèle d'activation interactive (IAM)</h3>
+                
+                <p>Le modèle d'activation interactive (McClelland et Rumelhart, 1981) propose une architecture à trois niveaux de représentation :</p>
+
+                <ul>
+                    <li>Un niveau <strong>traits visuels</strong> (features) codant des propriétés élémentaires (segments, orientations, etc.)</li>
+                    <li>Un niveau <strong>lettres</strong>, avec une unité par lettre à chaque position</li>
+                    <li>Un niveau <strong>mots</strong>, avec une unité par mot</li>
+                </ul>
+
+                <p>L'originalité de ce modèle est le caractère interactif du traitement :</p>
+
+                <ul>
+                    <li>L'activation se propage <strong>ascendante</strong> (bottom-up) des traits vers les lettres, puis des lettres vers les mots</li>
+                    <li>Il existe aussi une <strong>rétropropagation</strong> (top-down) : les unités "mot" activées renvoient de l'activation vers les unités "lettre" correspondantes, qui renvoient elles-mêmes de l'activation vers les traits</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p><strong>Hypothèse clé :</strong> Plus les unités de traits sont activées, plus le stimulus correspondant est perçu comme haut.</p>
+                </div>
+
+                <h4>Prédictions du modèle IAM :</h4>
+                <ul>
+                    <li>Une lettre produira plus d'activation de traits qu'une pseudo-lettre</li>
+                    <li>Un mot produira davantage d'activation qu'un non-mot en pseudo-lettres ou un pseudomot</li>
+                    <li>L'illusion de hauteur devrait être plus forte pour les mots que pour les lettres isolées</li>
+                </ul>
+
+                <h3>L'hypothèse de fluence perceptive</h3>
+
+                <p>L'hypothèse de fluence perceptive part d'un constat général : les stimuli qui sont traités plus facilement (plus "fluently") sont typiquement jugés plus familiers, plus fréquents, plus plaisants, parfois plus longs en durée ou plus intenses.</p>
+
+                <p>Dans ce cadre, la fréquence et la familiarité jouent un rôle central : des mots fréquents, des lettres bien apprises, ou des configurations conformes aux régularités orthographiques sont traités de manière plus fluide, ce qui induirait un ensemble de biais de jugement.</p>
+
+                <div class="example">
+                    <p><strong>Problème :</strong> Si la fluence est paramétrée par la fréquence, les lettres isolées sont plus fréquentes que les mots. La fluence simple prédirait donc un effet plus fort pour lettres vs pseudo-lettres, ce qui n'est pas observé.</p>
+                </div>
+            </section>
+
+            <section id="methodes">
+                <h2><span class="section-num">III.</span> Méthodes expérimentales</h2>
+
+                <p>L'article présente deux expériences principales.</p>
+
+                <h3>Expérience 1 : lettres, pseudo-lettres et lettres miroir</h3>
+
+                <h4>Stimuli</h4>
+                <ul>
+                    <li><strong>Lettres réelles</strong></li>
+                    <li><strong>Pseudo-lettres</strong> : visuellement proches des lettres mais ne correspondant à aucune lettre de l'alphabet</li>
+                    <li><strong>Lettres miroir verticales</strong> : obtenues par symétrie verticale d'une lettre réelle</li>
+                </ul>
+
+                <h4>Tâche</h4>
+                <p>À chaque essai, deux stimuli sont présentés simultanément. Les participants doivent juger lequel des deux est le plus haut ou indiquer que les deux ont la même taille.</p>
+
+                <h4>Manipulations</h4>
+                <ul>
+                    <li><strong>Hauteur objective :</strong> même hauteur vs hauteur différente</li>
+                    <li><strong>Type de comparaison :</strong> lettre vs pseudo-lettre ; lettre vs lettre miroir</li>
+                </ul>
+
+                <h3>Expérience 2 : mots, pseudo-lettres, pseudomots et mots miroir</h3>
+
+                <h4>Stimuli</h4>
+                <ul>
+                    <li><strong>Mots réels</strong></li>
+                    <li><strong>Mots miroir</strong></li>
+                    <li><strong>Non-mots en pseudo-lettres</strong> (aucun statut orthographique)</li>
+                    <li><strong>Pseudomots</strong> obtenus en inversant l'ordre des syllabes d'un mot</li>
+                </ul>
+
+                <div class="example">
+                    <p><strong>Exemple :</strong> CANAL vs NALCA — mêmes lettres, mais seul le mot dispose d'une représentation lexicale stable.</p>
+                </div>
+            </section>
+
+            <section id="resultats">
+                <h2><span class="section-num">IV.</span> Résultats</h2>
+
+                <h3>Expérience 1 : illusion de hauteur pour les lettres</h3>
+
+                <p>Les erreurs ne sont pas aléatoires, elles sont orientées :</p>
+
+                <ul>
+                    <li>Lorsque lettre et pseudo-lettre ont la même hauteur objective, les participants jugent plus souvent que la <strong>lettre est plus haute</strong></li>
+                    <li>Lorsque la lettre est légèrement plus petite, les participants jugent que les deux stimuli ont la même taille</li>
+                    <li>L'erreur inverse est nettement moins fréquente</li>
+                </ul>
+
+                <div class="key-finding">
+                    <h4>Conclusion Expérience 1</h4>
+                    <p>Ces résultats indiquent une surévaluation systématique de la hauteur des lettres par rapport aux pseudo-lettres ou aux lettres miroir.</p>
+                </div>
+
+                <h3>Expérience 2 : illusion de hauteur pour les mots</h3>
+
+                <ul>
+                    <li>Les mots sont jugés plus hauts que leurs versions miroir, que des non-mots en pseudo-lettres et que des pseudomots</li>
+                    <li><strong>L'illusion est plus forte pour les mots que pour les lettres</strong></li>
+                </ul>
+
+                <div class="key-finding">
+                    <h4>Résultat clé</h4>
+                    <p>Dans la condition mot vs pseudomot avec les mêmes lettres (ex: CANAL vs NALCA) : les participants jugent systématiquement que le mot est plus haut que le pseudomot, malgré une hauteur physique identique. L'illusion ne peut donc pas être expliquée uniquement par des propriétés visuelles de bas niveau.</p>
+                </div>
+            </section>
+
+            <section id="discussion">
+                <h2><span class="section-num">V.</span> Discussion</h2>
+
+                <h3>Limites des explications purement "bas niveau"</h3>
+
+                <p>La condition mot vs pseudomot avec les mêmes lettres est décisive : elle montre qu'une différence de traitement persiste alors que les propriétés visuelles sont pratiquement identiques. Une explication purement bas niveau est donc insuffisante.</p>
+
+                <h3>Fluence perceptive : une explication partielle</h3>
+
+                <p>L'hypothèse de fluence perceptive fournit une explication simple mais deux limites apparaissent :</p>
+
+                <ul>
+                    <li>Si la fluence est directement proportionnelle à la fréquence objective, les lettres devraient produire une illusion plus forte que les mots</li>
+                    <li>La condition mot vs pseudomot révèle un effet spécifique du statut lexical</li>
+                </ul>
+
+                <h3>Interprétation dans le cadre de l'IAM</h3>
+
+                <p>Dans le cadre de l'IAM, l'illusion de hauteur s'explique naturellement par la rétroactivation multi-niveau :</p>
+
+                <ul>
+                    <li>Pour les <strong>lettres</strong> : les traits bénéficient de feedback depuis le niveau lettre</li>
+                    <li>Pour les <strong>mots</strong> : les traits bénéficient de feedback depuis le niveau mot vers les lettres, puis des lettres vers les traits</li>
+                </ul>
+
+                <h3>Convergence avec les données neurophysiologiques</h3>
+
+                <p>Les auteurs rapprochent leurs résultats de données en neuroimagerie :</p>
+
+                <ul>
+                    <li>Les aires visuelles précoces (V1, V2, V3, V4) sont <strong>rétinotopiques</strong> : un stimulus plus grand occupe une plus grande portion de cortex visuel primaire</li>
+                    <li>Des mots réels produisent une activation plus forte dans ces aires que des stimuli dépourvus de structure orthographique</li>
+                    <li>L'existence de connexions réciproques entre aires visuelles est compatible avec l'idée d'une modulation descendante</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p><strong>Note importante :</strong> L'IAM et la fluence perceptive ne sont pas nécessairement exclusifs : la modulation descendante pourrait être un mécanisme produisant la fluence.</p>
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <h2><span class="section-num">VI.</span> Conclusion</h2>
+
+                <p>Les travaux présentés mettent en évidence une <strong>illusion de taille robuste</strong> : lettres et mots sont perçus comme étant plus hauts que des pseudo-lettres, des mots miroir ou des pseudomots de taille physique identique. De plus, cette illusion est plus forte pour les mots que pour les lettres, et elle persiste même lorsque les stimuli partagent exactement les mêmes lettres.</p>
+
+                <p>Ces résultats montrent que le traitement des lettres et des mots ne se contente pas d'améliorer la reconnaissance : il rejaillit sur des propriétés perceptives de bas niveau, comme la taille apparente. Ils s'inscrivent dans une vision de la perception où les niveaux de traitement élevés (lexicaux, linguistiques) modulent de manière récurrente les premières étapes du traitement visuel.</p>
+
+                <div class="key-finding">
+                    <h4>Points clés à retenir</h4>
+                    <ul>
+                        <li>L'illusion de hauteur est particulièrement compatible avec le modèle d'activation interactive</li>
+                        <li>L'hypothèse de fluence perceptive doit être raffinée pour expliquer les résultats observés</li>
+                        <li>La lecture reconfigure en profondeur le système visuel et modifie la perception des propriétés physiques des stimuli écrits</li>
+                    </ul>
+                </div>
+
+                <p>Ces résultats ouvrent plusieurs pistes : généralisation à d'autres catégories d'objets (visages, chiffres), articulation entre modèles connexionnistes et données de neuroimagerie, et exploration des effets de l'apprentissage chez différentes populations.</p>
+            </section>
+        </main>
+
+            <section id="experience">
+                <h2><span class="section-num">VII.</span> Recréation de l'expérience 1</h2>
+                
+                <p>Nous avons développé une implémentation en Python de l'expérience 1 décrite dans cette synthèse. Cette expérience permet de tester l'illusion de hauteur des lettres en comparant des lettres réelles avec des pseudo-lettres et des lettres miroir.</p>
+
+                <div class="download-box">
+                    <div class="download-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <path d="M12 18v-6"/>
+                            <path d="M9 15l3 3 3-3"/>
+                        </svg>
+                    </div>
+                    <div class="download-info">
+                        <h4>Neuros 2.py</h4>
+                        <p>Script Python utilisant Pygame pour reproduire l'expérience de comparaison de hauteur entre lettres et pseudo-lettres.</p>
+                        <a href="Neuros 2.py" download class="download-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Télécharger le script
+                        </a>
+                    </div>
+                </div>
+
+                <h4>Fonctionnalités du script :</h4>
+                <ul>
+                    <li>Comparaison lettre vs pseudo-lettre</li>
+                    <li>Comparaison lettre vs lettre-miroir</li>
+                    <li>Conditions de taille : même taille, lettre plus petite, lettre plus grande</li>
+                    <li>Enregistrement des réponses et temps de réaction</li>
+                    <li>Export des résultats en CSV pour analyse</li>
+                </ul>
+
+                <h4>Prérequis :</h4>
+                <ul>
+                    <li>Python 3.x</li>
+                    <li>Pygame (<code>pip install pygame</code>)</li>
+                </ul>
+            </section>
+
+            <section id="references" class="references-section">
+                <h2><span class="section-num">⬝</span> Références</h2>
+                <div class="reference-item">
+                    <p class="reference-text">New, B., Doré-Mazars, K., Cavézian, C., Pallier, C., & Barra, J. (2016). <em>The letter height superiority illusion.</em> Psychonomic Bulletin & Review, 23(1), 291-298.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Synthèse académique — HSS_51H05_EP</p>
+            <p style="font-size: 0.8rem; margin-top: 5px; color: var(--text-muted);">École Polytechnique</p>
+        </footer>
+    </div>
+
+    <button class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script>
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', () => {
+            const scrollBtn = document.querySelector('.scroll-top');
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
+
