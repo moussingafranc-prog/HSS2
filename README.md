@@ -4,13 +4,13 @@
 
 Ce projet contient une synthèse académique sur l'illusion de hauteur des lettres et des mots, dans le cadre du cours **HSS_51H05_EP — Approches expérimentales de la cognition** à l'École Polytechnique.
 
-L'étude explore comment l'apprentissage de la lecture modifie la perception visuelle, conduisant à une illusion perceptive où les lettres et les mots sont perçus comme étant plus grands que des pseudo-lettres ou des non-mots, même lorsque leur taille physique est identique.
+L'étude explore comment l'apprentissage de la lecture modifie la perception visuelle, conduisant à une illusion perceptive où les lettres et les mots sont perçus comme étant plus grands que des stimuli contrôlés de taille identique.
 
 ## 🌐 Page Web de Synthèse
 
-**[Synthèse principale](synthese2.html)** - Version complète avec une section dédiée à la recréation de l'expérience
+**[Synthèse principale](https://moussingafranc-prog.github.io/HSS2/synthese2.html)** - Version complète avec une section dédiée à la recréation de l'expérience
 
-Cettz page web peuvent être ouvertes directement dans un navigateur pour une expérience de lecture optimale avec une mise en page élégante et une navigation interactive.
+Cette page web peut être ouverte directement dans un navigateur pour une expérience de lecture optimale avec une mise en page élégante et une navigation interactive.
 
 ### Contenu des synthèses
 
@@ -46,8 +46,8 @@ python "Neuros 2.py"
 
 ## 📊 Fichiers Inclus
 
-- `synthese.html` - Page web de synthèse principale
 - `synthese2.html` - Page web de synthèse détaillée
+- `synthese2.txt` - Version texte associée (vide ou notes)
 - `Neuros 2.py` - Script Python pour l'expérience interactive
 - `figure1.png` - Schéma de la tâche expérimentale
 - `figure2.png` - Graphes des résultats expérimentaux
@@ -80,9 +80,8 @@ Pour visualiser les synthèses :
    cd HSS2
    ```
 
-2. Ouvrir les fichiers HTML dans votre navigateur :
-   - Double-cliquer sur `synthese.html` ou `synthese2.html`
-   - Ou utiliser un serveur local pour une meilleure expérience
+2. Ouvrir la synthèse en ligne :
+   - Visitez : https://moussingafranc-prog.github.io/HSS2/synthese2.html
 
 3. Pour exécuter l'expérience Python :
    ```bash
