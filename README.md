@@ -1,12 +1,12 @@
 # L'Illusion de Hauteur des Lettres et des Mots
 
-## 📚 Description
+## Description
 
 Ce projet contient une synthèse académique sur l'illusion de hauteur des lettres et des mots, dans le cadre du cours **HSS_51H05_EP — Approches expérimentales de la cognition** à l'École Polytechnique.
 
 L'étude explore comment l'apprentissage de la lecture modifie la perception visuelle, conduisant à une illusion perceptive où les lettres et les mots sont perçus comme étant plus grands que des stimuli contrôlés de taille identique.
 
-## 🌐 Page Web de Synthèse
+##  Page Web de Synthèse
 
 **[Synthèse principale](https://moussingafranc-prog.github.io/HSS2/synthese2.html)** - Version complète avec une section dédiée à la recréation de l'expérience
 
@@ -21,7 +21,7 @@ Cette page web peut être ouverte directement dans un navigateur pour une expér
 5. **Discussion** - Interprétation et implications théoriques
 6. **Conclusion** - Impact de la lecture sur la perception visuelle
 
-## 🔬 Expérience Interactive
+##  Expérience Interactive
 
 ### Script Python : Neuros 2.py
 
@@ -44,7 +44,7 @@ pip install pygame
 python "Neuros 2.py"
 ```
 
-## 📊 Fichiers Inclus
+## Fichiers Inclus
 
 - `synthese2.html` - Page web de synthèse détaillée
 - `synthese2.txt` - Version texte associée 
@@ -53,24 +53,24 @@ python "Neuros 2.py"
 - `figure2.png` - Graphes des résultats expérimentaux
 - `I.pdf` - Document PDF de référence
 
-## 📖 Référence Bibliographique
+##  Référence Bibliographique
 
 New, B., Doré-Mazars, K., Cavézian, C., Pallier, C., & Barra, J. (2016). *The letter height superiority illusion.* Psychonomic Bulletin & Review, 23(1), 291-298.
 
-## 👤 Auteur
+##  Auteur
 
 **MOUSSINGA NDOUMBE François**  
 École Polytechnique  
-📧 [francois.moussiga@polytechnique.edu](mailto:francois.moussiga@polytechnique.edu)
+ [francois.moussiga@polytechnique.edu](mailto:francois.moussiga@polytechnique.edu)
 
-## 🎯 Concepts Clés
+##  Concepts Clés
 
 - **Effet de supériorité du mot** - Les lettres sont mieux reconnues dans les mots que isolément
 - **Modèle d'activation interactive (IAM)** - Modèle connexionniste avec feedback multi-niveau
 - **Fluence perceptive** - Les stimuli familiers sont traités plus facilement
 - **Illusion de hauteur** - Les lettres et mots sont perçus comme plus grands que des pseudo-stimuli de taille identique
 
-## 🚀 Visualiser le Projet
+##  Visualiser le Projet
 
 Pour visualiser les synthèses :
 
@@ -89,6 +89,6 @@ Pour visualiser les synthèses :
    python "Neuros 2.py"
    ```
 
-## 📝 Licence
+##  Licence
 
 Ce projet est réalisé dans un cadre académique à l'École Polytechnique.
