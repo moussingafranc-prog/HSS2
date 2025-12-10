@@ -47,7 +47,7 @@ python "Neuros 2.py"
 ## 📊 Fichiers Inclus
 
 - `synthese2.html` - Page web de synthèse détaillée
-- `synthese2.txt` - Version texte associée (vide ou notes)
+- `synthese2.txt` - Version texte associée 
 - `Neuros 2.py` - Script Python pour l'expérience interactive
 - `figure1.png` - Schéma de la tâche expérimentale
 - `figure2.png` - Graphes des résultats expérimentaux
