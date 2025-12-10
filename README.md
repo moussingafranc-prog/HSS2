@@ -6,14 +6,11 @@ Ce projet contient une synthèse académique sur l'illusion de hauteur des lettr
 
 L'étude explore comment l'apprentissage de la lecture modifie la perception visuelle, conduisant à une illusion perceptive où les lettres et les mots sont perçus comme étant plus grands que des pseudo-lettres ou des non-mots, même lorsque leur taille physique est identique.
 
-## 🌐 Pages Web de Synthèse
+## 🌐 Page Web de Synthèse
 
-Le projet comprend deux versions de synthèse sous forme de pages web interactives :
+**[Synthèse principale](synthese2.html)** - Version complète avec une section dédiée à la recréation de l'expérience
 
-- **[Synthèse principale](synthese.html)** - Version complète avec une section dédiée à la recréation de l'expérience
-- **[Synthèse détaillée](synthese2.html)** - Version alternative avec davantage de détails méthodologiques et des figures intégrées
-
-Ces pages web peuvent être ouvertes directement dans un navigateur pour une expérience de lecture optimale avec une mise en page élégante et une navigation interactive.
+Cettz page web peuvent être ouvertes directement dans un navigateur pour une expérience de lecture optimale avec une mise en page élégante et une navigation interactive.
 
 ### Contenu des synthèses
 
